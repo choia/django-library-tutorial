@@ -3,6 +3,13 @@ from django.urls import reverse 	# Used to generate URLS by reversing the URL pa
 import uuid
 
 
+class Genre(models.Model):
+	name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction, French Poetry etc.)")
+
+	def __str__(self):
+		return self.name
+
+
 class Book(models.Model):
 	title 		= models.CharField(max_length=200)
 	author 		= models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
@@ -15,7 +22,6 @@ class Book(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('book-detail', arg=[str(self.id)])
-
 
 
 class BookInstance(models.Model):
@@ -40,7 +46,6 @@ class BookInstance(models.Model):
 		return '{0} ({1})'.format(self.id, self.book.title)
 
 
-
 class Author(models.Model):
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
@@ -54,12 +59,8 @@ class Author(models.Model):
 		return '{0}, {1}'.format(self.last_name, self.first_name)
 
 
-		
-class Genre(models.Model):
-	name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction, French Poetry etc.)")
 
-	def __str__(self):
-		return self.name
+
 
 
 
