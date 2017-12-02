@@ -33,9 +33,15 @@ class BookDetailView(DetailView):
 	template_name = 'book_detail.html'
 
 
-def authors(request):
-	authors = Author.objects.all()
-	context = { 'authors': authors, }
-	return render(request, 'authors.html', context)
+
+class AuthorListView(ListView):
+	model = Author
+	paginate_by = 10
+	template_name = 'authors.html'
+
+
+class AuthorDetailView(DetailView):
+	model = Author
+	template_name = 'author_detail.html'
 
 
