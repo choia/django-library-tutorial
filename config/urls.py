@@ -20,15 +20,22 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 
 
+# Admin Interface Mapper
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 
-# Redirect to catalog url mapper
+# Redirect to Catalog URL Mapper
 urlpatterns += [
 	url(r'^catalog/', include('catalog.urls')),
 	url(r'^$', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]
+
+# Authentication URL
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+]
+
 
 # Use static to add url mapping to server static files for local development only
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

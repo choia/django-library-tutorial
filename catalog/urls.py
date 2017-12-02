@@ -1,6 +1,8 @@
 from django.conf.urls import include, url
 from . import views
 
+
+# Application URL Mapper
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
