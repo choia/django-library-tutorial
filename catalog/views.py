@@ -24,7 +24,7 @@ def index(request):
 
 class BookListView(ListView):
 	model = Book
-	paginate_by = 10
+	paginate_by = 25
 	template_name = 'book_list.html'
 
 
@@ -36,7 +36,7 @@ class BookDetailView(DetailView):
 
 class AuthorListView(ListView):
 	model = Author
-	paginate_by = 10
+	paginate_by = 25
 	template_name = 'authors.html'
 
 
