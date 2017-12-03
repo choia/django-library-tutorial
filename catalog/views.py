@@ -1,7 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Book, BookInstance, Author, Genre 
-
 
 
 def index(request):
@@ -24,23 +24,22 @@ def index(request):
 
 class BookListView(ListView):
 	model = Book
-	paginate_by = 10
+	paginate_by = 25
 	template_name = 'book_list.html'
 
 
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin, DetailView):
 	model = Book
 	template_name = 'book_detail.html'
 
 
-
 class AuthorListView(ListView):
 	model = Author
-	paginate_by = 10
+	paginate_by = 25
 	template_name = 'authors.html'
 
 
-class AuthorDetailView(DetailView):
+class AuthorDetailView(LoginRequiredMixin, DetailView):
 	model = Author
 	template_name = 'author_detail.html'
 
