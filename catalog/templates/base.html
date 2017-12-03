@@ -27,6 +27,7 @@
           <li><a href="{% url 'authors' %}">All Authors</a></li>
       {% if user.is_authenticated %}
           <li>User: {{ user.get_username }}</li>
+          <li><a href="{% url 'borrowed-book' %}">My Borrowed</a></li>
           <!-- Appending ?next=request.path: 'next' contains current URL page where user is located and 
           redirects the user back to the page where they clicked login/logout link -->
           <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li> 
