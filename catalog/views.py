@@ -23,9 +23,9 @@ def index(request):
 
 
 class BookListView(ListView):
-	model = Book
-	paginate_by = 25
+	model = Book	
 	template_name = 'book_list.html'
+	paginate_by = 25
 
 
 class BookDetailView(LoginRequiredMixin, DetailView):
@@ -35,8 +35,8 @@ class BookDetailView(LoginRequiredMixin, DetailView):
 
 class AuthorListView(ListView):
 	model = Author
-	paginate_by = 25
 	template_name = 'authors.html'
+	paginate_by = 25
 
 
 class AuthorDetailView(LoginRequiredMixin, DetailView):
@@ -44,3 +44,10 @@ class AuthorDetailView(LoginRequiredMixin, DetailView):
 	template_name = 'author_detail.html'
 
 
+class LoanedBookUserListView(LoginRequiredMixin, ListView):
+	model = BookInstance
+	template_name = 'borrowed_book.html'
+	paginate_by = 10
+
+	def get_queryset(self):
+		return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('-due_back')
