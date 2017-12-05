@@ -14,6 +14,7 @@ urlpatterns = [
 # User Loaned Book URL Conf
 urlpatterns += [
 	url(r'^mybooks/$', views.LoanedBookUserListView.as_view(), name='borrowed-book'),
+	url(r'^borrowed/$', views.AllBorrowedBookListView.as_view(), name='all-borrowed-book'),
 ]
 
 # Renew Book URL Conf

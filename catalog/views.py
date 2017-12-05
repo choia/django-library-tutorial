@@ -1,7 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from datetime import date
 from .models import Book, BookInstance, Author, Genre 
+from .forms import RenewBookForm
+
 
 
 def index(request):
@@ -51,3 +56,23 @@ class LoanedBookUserListView(LoginRequiredMixin, ListView):
 
 	def get_queryset(self):
 		return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('-due_back')
+
+
+class AllBorrowedBookListView(PermissionRequiredMixin, ListView):
+	model = BookInstance
+	template_name = 'all_borrowed_book.html'
+	paginate_by = 25
+	permission_required = 'catalog.can_mark_returned'
+
+
+def renew_book(request, pk):
+	book_instance = get_object_or_404(BookInstance, pk=pk)
+
+	if request.method == 'POST':
+		form = RenewBookForm(request.POST)
+
+		if form.is_valid():
+			book_instance.due_back = form.cleaned_data['renewal_date']
+			book_instance.save()
+
+			return HttpResponseRedirect(reverse('all-borrowed-book'))
