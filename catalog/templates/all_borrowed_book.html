@@ -5,12 +5,15 @@
 
     {% if bookinstance_list %}
     <ul>
-
       {% for bookinstance in bookinstance_list %}
       {% if bookinstance.status == 'o' %} 
       <li class="{% if bookinstance.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinstance.book.pk %}">{{bookinstance.book.title}}</a> ({{ bookinstance.due_back }}) - 
-        <a href="">{{ bookinstance.borrower }}</a>        
+        <a href="{% url 'book-detail' bookinstance.book.pk %}">{{ bookinstance.book.title }}</a> ({{ bookinstance.due_back }}) - 
+        <a href="">{{ bookinstance.borrower }}</a> 
+
+        {% if perms.catalog.can_mark_returned %} -
+        <a href="{% url 'renew-book' bookinstance.pk %}">Renew</a>
+        {% endif %}
       </li>
       {% endif %}
       {% endfor %}

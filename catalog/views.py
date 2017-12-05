@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from datetime import date
+from datetime import date, timedelta
 from .models import Book, BookInstance, Author, Genre 
 from .forms import RenewBookForm
 
@@ -76,3 +76,15 @@ def renew_book(request, pk):
 			book_instance.save()
 
 			return HttpResponseRedirect(reverse('all-borrowed-book'))
+
+	else:
+		proposed_renewal_date = date.today() + timedelta(weeks=3)
+		form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})		
+
+
+	context = {
+		'form': form,
+		'book_instance': book_instance,
+	}	
+
+	return render(request, 'renew_book.html', context)
