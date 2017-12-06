@@ -9,7 +9,6 @@ from .models import Book, BookInstance, Author, Genre
 from .forms import RenewBookForm
 
 
-
 def index(request):
 	num_books 		= Book.objects.all().count()
 	num_instances 	= BookInstance.objects.all().count()
@@ -66,6 +65,7 @@ class AllBorrowedBookListView(PermissionRequiredMixin, ListView):
 	permission_required = 'catalog.can_mark_returned'
 
 
+
 def renew_book(request, pk):
 	book_instance = get_object_or_404(BookInstance, pk=pk)
 
@@ -82,7 +82,6 @@ def renew_book(request, pk):
 		proposed_renewal_date = date.today() + timedelta(weeks=3)
 		form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})		
 
-
 	context = {
 		'form': form,
 		'book_instance': book_instance,
@@ -91,20 +90,23 @@ def renew_book(request, pk):
 	return render(request, 'renew_book.html', context)
 
 
-class AuthorCreate(CreateView):
+
+class AuthorCreate(PermissionRequiredMixin, CreateView):
 	model = Author
 	template_name = 'author_form.html'
 	fields = '__all__'
+	permission_required = 'catalog.can_mark_returned'
 	
 
-
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
 	model = Author
 	template_name = 'author_form.html'
 	fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+	permission_required = 'catalog.can_mark_returned'
 
 
-class AuthorDelete(DeleteView):
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
 	model = Author
 	template_name = 'author_confirm_delete.html'
 	success_url = reverse_lazy('authors')
+	permission_required = 'catalog.can_mark_returned'

@@ -24,10 +24,10 @@
       <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'books' %}">All Books</a></li>
-          <li><a href="{% url 'authors' %}">All Authors</a></li>
+          <li><a href="{% url 'authors' %}">All Authors</a></li><hr>
       {% if user.is_authenticated %}
-          <li>User: {{ user.get_username }}</li>
-          <li><a href="{% url 'borrowed-book' %}">My Borrowed</a></li>
+          <li><strong>User: {{ user.get_username }}</strong></li>
+          <li><a href="{% url 'borrowed-book' %}">My Borrowed</a></li><br>
           <!-- Appending ?next=request.path: 'next' contains current URL page where user is located and 
           redirects the user back to the page where they clicked login/logout link -->
           <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li> 
@@ -37,6 +37,7 @@
           {% if perms.catalog.can_mark_returned %}
           <hr><li>Staff</li>
           <li><a href="{% url 'all-borrowed-book' %}">All Borrowed</a></li>
+          <li><a href="{% url 'author-create' %}">Add Author</a></li>
           {% endif %}
       </ul>
      {% endblock %}
