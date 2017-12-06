@@ -1,9 +1,10 @@
+from datetime import date, timedelta
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
-from datetime import date, timedelta
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Book, BookInstance, Author, Genre 
 from .forms import RenewBookForm
 
@@ -88,3 +89,22 @@ def renew_book(request, pk):
 	}	
 
 	return render(request, 'renew_book.html', context)
+
+
+class AuthorCreate(CreateView):
+	model = Author
+	template_name = 'author_form.html'
+	fields = '__all__'
+	
+
+
+class AuthorUpdate(UpdateView):
+	model = Author
+	template_name = 'author_form.html'
+	fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+
+
+class AuthorDelete(DeleteView):
+	model = Author
+	template_name = 'author_confirm_delete.html'
+	success_url = reverse_lazy('authors')
