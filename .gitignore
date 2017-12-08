@@ -1,5 +1,5 @@
 # Library-Project
-config/settings/local.py
+#config/settings/local.py
 catalog/staticfiles
 
 # Byte-compiled / optimized / DLL files
