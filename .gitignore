@@ -1,7 +1,7 @@
 # Library-Project
 #config/settings/local.py
 catalog/staticfiles
-images/
+#images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
