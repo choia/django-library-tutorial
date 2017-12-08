@@ -38,19 +38,13 @@ Clone the repository first
 
 - Run makemigrations and then migration
 
-```
-	$ python manage.py makemigrations
-    $ python manage.py migrate
-```
-
 - Run locally to test it out! Recommend logging into admin console first and add users, book, and author data for experiment.
 <hr>
 
-#### Library site Functionality
+#### Functionality
 
 - Login/Logout authentication
 - User with certain user group permission allows create, edit, and delete Author data & ability to renew the date of borrowed books for all borrowers
 - Provide dynamic records of books, copies that are either available, on loan, reserved, and maintenance
-- Pagination
 - Test functionality to check the models, views, and templates
 
